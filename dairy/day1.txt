@@ -1,0 +1,32 @@
+started learning Arduino 
+wrote embedded c
+used Arduino uno
+
+pinMode(pinNumber,HIGH/LOW)
+
+blink 1 led
+blink 3 led with 1sec delay
+
+digitaWrite(bpin, HIGH/LOW )
+digitalRead(pinNumber) for 0 / 1
+
+buzzer when blinking each led using HDX TMB 12A O5
+
+analogWrite(bpin, intensity) in case of led (bp, brightness)
+ AnalogWrite uses pulse width modulation (PWM), turning a digital pin on and off very quickly with different ratio between on and off, to create a fading effect.
+
+tone(bpin, freq, time)
+
+used MQ-2 COMBUSTABLE GASS, SMOKE
+MQ-3 ALCHOHOL
+MQ-4 METHANE, PROPANE, BUTANE
+
+analogRead(pinNumber) returns a number between 0 and 1023 that is proportional to the amount of voltage being applied to the pin.
+
+thermocouple
+rtd(resistance temperature detector)
+thermistor
+
+semiconductor
+
+DHT11 standalone(temperature and humidity)

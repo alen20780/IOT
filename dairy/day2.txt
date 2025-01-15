@@ -1,0 +1,20 @@
+DHT11 standalone(temperature and humidity)
+and display it on an 1.3`OLED IIC
+
+temperature
+temperatureOnOled
+temperatureAndHumidityOnOled
+
+HC-SR04 ultrasonic sensor 
+with newping library
+
+distanceSensor
+
+servomotor
+redwire 5v
+brown/black gnd
+yellow dpin
+
+servoMortorProximity
+
+Capacitive soil moisture sensor v2.0
