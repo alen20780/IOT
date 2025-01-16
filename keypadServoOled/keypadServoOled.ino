@@ -23,9 +23,8 @@ String inputAngle = "";
 void setup() {
   myServo.attach(13);
   initDisplay();
-  printCentered("Enter Angle:");
+  drawStaticUI();  // Draw static elements once
   customKeypad.begin();
-  delay(200);
 }
 
 void loop() {
@@ -36,31 +35,36 @@ void loop() {
     if (e.bit.EVENT == KEY_JUST_PRESSED) {
       char pressedKey = (char)e.bit.KEY;
 
-      oled.clear(); // Clear the screen before updating the display
-
       if (pressedKey >= '0' && pressedKey <= '9') {
         inputAngle += pressedKey;
-        printCentered("Input: " + inputAngle);
+        updateInputArea(inputAngle);  // Update input area dynamically
       } else if (pressedKey == '#') {
         int angle = inputAngle.toInt();
         if (angle >= 0 && angle <= 180) {
           myServo.write(angle);
-          printCentered("Angle Set: " + String(angle));
+          updateFeedback("Angle: " + String(angle));
         } else {
-          printCentered("Error: Invalid Angle");
+          updateFeedback("Error.");
         }
-        inputAngle = "";
+        inputAngle = "";  // Clear input after processing
+        updateInputArea(inputAngle);
       } else if (pressedKey == '*') {
-        inputAngle = "";
-        printCentered("Input Cleared");
+        inputAngle = "";  // Clear input
+        updateInputArea(inputAngle);
+        updateFeedback("Input Cleared");
+        oled.clear();
+        delay(200);
+        drawStaticUI();
       } else {
-        printCentered("Invalid Key");
+        updateFeedback("Invalid Key");
+        oled.clear();
+        delay(200);
+        drawStaticUI();
       }
-      oled.update();
     }
   }
-  delay(300); 
-} 
+  delay(100);
+}
 
 void initDisplay() {
   oled.init();  
@@ -68,15 +72,41 @@ void initDisplay() {
   oled.update(); 
 }
 
-void printCentered(String message) {
-  oled.clear(); 
-  oled.setScale(2); 
-  
-  byte textWidth = message.length() * 6 * 2;
-  byte x = (128 - textWidth) / 2; 
-  byte y = 24; 
+void drawStaticUI() {
+  oled.clear();
+  oled.setScale(1);
 
-  oled.setCursorXY(x, y);
-  oled.print(message);
+  // Draw a border
+  oled.rect(0, 0, 127, 63, OLED_STROKE);
+
+  // Display the title
+  oled.setCursorXY(10, 5);
+  oled.print("ENTER ANGLE:");
+
+  // Labels for input and feedback
+  oled.setCursorXY(5, 30);
+  oled.print("Input: ");
+  
+  oled.setCursorXY(5, 45);
+  oled.print("Status: ");
+
+  oled.update();
+}
+
+void updateInputArea(String input) {
+  oled.setScale(1);
+  oled.setCursorXY(50, 30);  // Position for the input area
+  oled.print("          ");   // Clear previous input
+  oled.setCursorXY(50, 30);  // Reset position
+  oled.print(input);         // Display new input
+  oled.update();
+}
+
+void updateFeedback(String message) {
+  oled.setScale(1);
+  oled.setCursorXY(50, 45);  // Position for the feedback area
+  oled.print("          ");   // Clear previous feedback
+  oled.setCursorXY(50, 45);  // Reset position
+  oled.print(message);       // Display new feedback
   oled.update();
 }
